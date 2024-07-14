@@ -2,27 +2,18 @@
 
 import { ResizeHandler } from "@/components";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn, formatPrice } from "@/lib/utils";
-import NextImage from "next/image";
-import { Rnd } from "react-rnd";
-import { RadioGroup } from "@headlessui/react";
-import { useRef, useState } from "react";
-import { COLORS, FINISHES, MATERIALS, MODELS, BASE_PRICE } from "@/constants";
-import { Label } from "@/components/ui/label";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, ChevronsUpDown } from "lucide-react";
-import { useUploadThing } from "@/lib/uploadthing";
 import { useToast } from "@/components/ui/use-toast";
+import { BASE_PRICE, COLORS, FINISHES, MATERIALS, MODELS } from "@/constants";
+import { useUploadThing } from "@/lib/uploadthing";
+import { cn, formatPrice } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
-import { saveConfig as _saveConfig, SaveConfigArgs } from "./actions";
+import { ArrowRight } from "lucide-react";
+import NextImage from "next/image";
 import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { Rnd } from "react-rnd";
+import { saveConfig as _saveConfig, SaveConfigArgs } from "./actions";
 import { PhoneCaseStyler } from "./components/PhoneCaseStyler";
 import { TPhoneCaseOption } from "./types";
 
@@ -40,10 +31,10 @@ export const DesignConfig = ({
   const { toast } = useToast();
   const router = useRouter();
 
-  const { mutate: saveConfig, isPending } = useMutation({
+  const { mutate: saveConfigs, isPending } = useMutation({
     mutationKey: ["save-config"],
     mutationFn: async (args: SaveConfigArgs) => {
-      await Promise.all([saveConfiguration(), _saveConfig(args)]);
+      await Promise.all([saveDesignConfig(), _saveConfig(args)]);
     },
     onError: () => {
       toast({
@@ -79,7 +70,7 @@ export const DesignConfig = ({
 
   const { startUpload } = useUploadThing("imageUploader");
 
-  async function saveConfiguration() {
+  async function saveDesignConfig() {
     try {
       const {
         left: caseLeft,
@@ -94,6 +85,7 @@ export const DesignConfig = ({
       const leftOffset = caseLeft - containerLeft;
       const topOffset = caseTop - containerTop;
 
+      // These are the actual coordinates of design image relative to the the phone case.
       const actualX = renderedPosition.x - leftOffset;
       const actualY = renderedPosition.y - topOffset;
 
@@ -102,6 +94,7 @@ export const DesignConfig = ({
       canvas.height = height;
       const ctx = canvas.getContext("2d");
 
+      // We create an image element, load it from the URL and draw it on the canvas.
       const userImage = new Image();
       userImage.crossOrigin = "anonymous";
       userImage.src = imageUrl;
@@ -149,6 +142,7 @@ export const DesignConfig = ({
         className="relative h-[37.5rem] overflow-hidden col-span-2 w-full max-w-4xl flex items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       >
         <div className="relative w-60 bg-opacity-50 pointer-events-none aspect-[896/1831]">
+          {/* The frame of the phone case (camera and border) */}
           <AspectRatio
             ref={phoneCaseRef}
             ratio={896 / 1831}
@@ -162,10 +156,10 @@ export const DesignConfig = ({
             />
           </AspectRatio>
 
-          {/* An overlay above the overflow part of the phone case image. */}
+          {/* An overlay around the phone case and above the overflow part of the design image. */}
           <div className="absolute z-40 inset-0 left-[3px] top-px right-[3px] bottom-px rounded-[32px] shadow-[0_0_0_99999px_rgba(229,231,235,0.6)]" />
 
-          {/* Fill the phone case with a specific color */}
+          {/* Fill the phone case with user-selected color */}
           <div
             className={cn(
               "absolute inset-0 left-[3px] top-px right-[3px] bottom-px rounded-[32px]",
@@ -176,24 +170,22 @@ export const DesignConfig = ({
 
         <Rnd
           default={{
-            x: 150,
-            y: 205,
-            height: imageDimensions.height / 4,
-            width: imageDimensions.width / 4,
+            // initial x, y, width and height of the image
+            ...renderedPosition,
+            ...renderedDimension,
           }}
-          onResizeStop={(_, __, ref, ___, { x, y }) => {
+          onResizeStop={(_, __, el, ___, { x, y }) => {
             setRenderedDimension({
-              height: parseInt(ref.style.height.slice(0, -2)),
-              width: parseInt(ref.style.width.slice(0, -2)),
+              // conversion from string with 'px' to number
+              height: parseInt(el.style.height.slice(0, -2)),
+              width: parseInt(el.style.width.slice(0, -2)),
             });
-
             setRenderedPosition({ x, y });
           }}
-          onDragStop={(_, data) => {
-            const { x, y } = data;
+          onDragStop={(_, { x, y }) => {
             setRenderedPosition({ x, y });
           }}
-          className="absolute z-20 border-[3px] border-primary"
+          className="absolute z-[20] border-[3px] border-primary"
           lockAspectRatio
           resizeHandleComponent={{
             bottomRight: <ResizeHandler />,
@@ -229,7 +221,7 @@ export const DesignConfig = ({
               disabled={isPending}
               loadingText="Saving"
               onClick={() =>
-                saveConfig({
+                saveConfigs({
                   configId,
                   color: options.color.value,
                   finish: options.finish.value,
