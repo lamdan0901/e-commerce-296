@@ -4,3 +4,4 @@ export * from "./Phone";
 export * from "./Icons";
 export * from "./Steps";
 export * from "./ResizeHandler";
+export * from "./LoginModal";
