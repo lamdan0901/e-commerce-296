@@ -6,17 +6,23 @@ import { useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { PhonePreview } from "@/components";
 import { formatPrice } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 export const ThankYou = () => {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId") || "";
+  const [retry, setRetry] = useState(true);
 
   const { data } = useQuery({
     queryKey: ["get-payment-status"],
     queryFn: async () => await getPaymentStatus({ orderId }),
-    retry: true,
+    retry,
     retryDelay: 500, // Incase of the webhook, this can take a while
   });
+
+  useEffect(() => {
+    if (retry && data) setRetry(false);
+  }, [retry, data]);
 
   // We have to wait cuz webhook is not instant
   if (data === undefined) {

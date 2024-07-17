@@ -23,7 +23,7 @@ export const DesignPreview = ({
   const router = useRouter();
   const { toast } = useToast();
   const { id } = configuration;
-  const { user } = useKindeBrowserClient();
+  const { user, isLoading } = useKindeBrowserClient();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
@@ -165,11 +165,12 @@ export const DesignPreview = ({
             <div className="mt-8 flex justify-end pb-12">
               <Button
                 isLoading={isPending}
-                disabled={isPending}
+                disabled={isPending || !!isLoading}
                 onClick={() => handleCheckout()}
                 className="px-4 sm:px-6 lg:px-8"
               >
-                Check out <ArrowRight className="h-4 w-4 ml-1.5 inline" />
+                Check out
+                {!isPending && <ArrowRight className="h-4 w-4 ml-1.5 inline" />}
               </Button>
             </div>
           </div>
