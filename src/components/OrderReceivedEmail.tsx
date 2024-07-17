@@ -23,10 +23,7 @@ export const OrderReceivedEmail = ({
   orderId: string;
   orderDate: string;
 }) => {
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://casecobra.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL!;
 
   return (
     <Html>

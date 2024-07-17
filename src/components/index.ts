@@ -6,3 +6,4 @@ export * from "./Steps";
 export * from "./ResizeHandler";
 export * from "./LoginModal";
 export * from "./OrderReceivedEmail";
+export * from "./PhonePreview";

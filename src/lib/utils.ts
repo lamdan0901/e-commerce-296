@@ -39,9 +39,9 @@ export function constructMetadata({
       title,
       description,
       images: [image],
-      creator: "@joshtriedcoding",
+      creator: "@anderson",
     },
     icons,
-    metadataBase: new URL("https://casecobra.vercel.app/"),
+    metadataBase: new URL("https://e-commerce-296-ekin.vercel.app"),
   };
 }

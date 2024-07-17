@@ -1693,17 +1693,6 @@
   resolved "https://registry.yarnpkg.com/@react-email/preview/-/preview-0.0.9.tgz#c5d1b999268009b8ca11fb56ae2c7084c2f2d7f2"
   integrity sha512-2fyAA/zzZYfYmxfyn3p2YOIU30klyA6Dq4ytyWq4nfzQWWglt5hNDE0cMhObvRtfjM9ghMSVtoELAb0MWiF/kw==
 
-"@react-email/render@0.0.15":
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/@react-email/render/-/render-0.0.15.tgz#77639ced997d7c6692662efe296fe6af65c93070"
-  integrity sha512-/pT5dBu0y1mogrfEpc002rgRcXpbShK6PFtxTVU6LZZ+bccvZPgk67HKc01lxpa1eYGQgZ6I+VQ02GRnMDclTg==
-  dependencies:
-    html-to-text "9.0.5"
-    js-beautify "^1.14.11"
-    react "^18.2.0"
-    react-dom "^18.2.0"
-    react-promise-suspense "0.3.4"
-
 "@react-email/render@0.0.16":
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/@react-email/render/-/render-0.0.16.tgz#cd53cf080699c9d09181c02541a745f9d2d59d5e"
@@ -4434,7 +4423,7 @@ react-dom-confetti@^0.2.0:
   dependencies:
     dom-confetti "0.2.2"
 
-react-dom@^18, react-dom@^18.2.0:
+react-dom@^18:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -4508,7 +4497,7 @@ react-style-singleton@^2.2.1:
     invariant "^2.2.4"
     tslib "^2.0.0"
 
-react@^18, react@^18.2.0:
+react@^18:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
@@ -4603,13 +4592,6 @@ regjsparser@^0.9.1:
   integrity sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==
   dependencies:
     jsesc "~0.5.0"
-
-resend@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/resend/-/resend-3.4.0.tgz#0621ae49f379f6c5bbbef48e8757d6a72b791104"
-  integrity sha512-F3PVHdTHeLonSnrU5V6k8643LJ9QacLu3uI9M+BAFkmBmB1ELM2x7fdsziYZoSm6DmU6TKwiQCK0jf8dcNomcQ==
-  dependencies:
-    "@react-email/render" "0.0.15"
 
 resolve-from@^4.0.0:
   version "4.0.0"

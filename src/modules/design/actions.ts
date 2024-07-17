@@ -1,24 +1,11 @@
 "use server";
 
-import { db } from "@/db";
-import {
-  CaseColor,
-  CaseFinish,
-  CaseMaterial,
-  PhoneModel,
-  Order,
-} from "@prisma/client";
 import { BASE_PRICE, PRODUCT_PRICES } from "@/constants/products";
+import { db } from "@/db";
 import { stripe } from "@/lib/stripe";
+import { SaveConfigArgs } from "@/modules/design/types";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-
-export type SaveConfigArgs = {
-  color: CaseColor;
-  finish: CaseFinish;
-  material: CaseMaterial;
-  model: PhoneModel;
-  configId: string;
-};
+import { Order } from "@prisma/client";
 
 export async function saveConfig({
   color,

@@ -13,7 +13,8 @@ import NextImage from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { Rnd } from "react-rnd";
-import { saveConfig as _saveConfig, SaveConfigArgs } from "./actions";
+import { SaveConfigArgs } from "@/modules/design/types";
+import { saveConfig as _saveConfig } from "./actions";
 import { PhoneCaseStyler } from "./components/PhoneCaseStyler";
 import { TPhoneCaseOption } from "./types";
 
