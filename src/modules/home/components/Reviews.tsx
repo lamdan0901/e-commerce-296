@@ -33,8 +33,8 @@ export function Reviews() {
   return (
     <MaxWidthWrapper className="relative max-w-5xl">
       <Image
-        width={200}
-        height={200}
+        width={170}
+        height={170}
         alt="What people are buying"
         aria-hidden="true"
         src="/what-people-are-buying.png"

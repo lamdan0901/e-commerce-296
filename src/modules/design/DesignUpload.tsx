@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import Dropzone, { FileRejection } from "react-dropzone";
 
+const MAX_FILE_SIZE = 4 * 1024 * 1024;
+
 export const DesignUpload = () => {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
@@ -33,11 +35,18 @@ export const DesignUpload = () => {
     const [file] = rejectedFiles;
     setIsDragOver(false);
 
-    toast({
-      title: `${file.file.type} type is not supported.`,
-      description: "Please choose a PNG, JPG, or JPEG image instead.",
-      variant: "destructive",
-    });
+    if (file.file.size > MAX_FILE_SIZE)
+      toast({
+        title: `File size is too large.`,
+        description: "Please choose a file size less than 4MB.",
+        variant: "destructive",
+      });
+    else
+      toast({
+        title: `${file.file.type} type is not supported`,
+        description: "Please choose a PNG, JPG, or JPEG image instead.",
+        variant: "destructive",
+      });
   };
 
   const onDropAccepted = (acceptedFiles: File[]) => {
@@ -64,6 +73,8 @@ export const DesignUpload = () => {
             "image/jpeg": [".jpeg"],
             "image/jpg": [".jpg"],
           }}
+          maxFiles={1}
+          maxSize={MAX_FILE_SIZE}
           onDragEnter={() => setIsDragOver(true)}
           onDragLeave={() => setIsDragOver(false)}
         >
@@ -100,7 +111,7 @@ export const DesignUpload = () => {
                 ) : (
                   <p>
                     <span className="font-semibold">Click to upload</span> or
-                    drag and drop
+                    drag and drop (Max size: 4MB)
                   </p>
                 )}
               </div>

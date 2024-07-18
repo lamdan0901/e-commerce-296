@@ -23,6 +23,7 @@ const AuthCallbackPage = () => {
   });
 
   if (data?.success) {
+    // If there is configId, redirect to the preview page. Otherwise, redirect to the home page (normal login case)
     if (configId) {
       localStorage.removeItem("configurationId");
       router.push(`/configure/preview?id=${configId}`);

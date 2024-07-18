@@ -99,7 +99,6 @@ async function sendOrderEmail(
   orderId: string,
   orderDate: string
 ) {
-  console.log("email: ", email);
   if (!email) throw new Error("Missing user email");
 
   const apiInstance = new brevo.TransactionalEmailsApi();
@@ -125,11 +124,11 @@ async function sendOrderEmail(
     name: "Ahihos",
     email: "thichluudan@gmail.com",
   };
-  sendSmtpEmail.to = [{ email, name: shippingAddress.name }];
   sendSmtpEmail.replyTo = {
     name: "Ahihos",
     email: "thichluudan@gmail.com",
   };
+  sendSmtpEmail.to = [{ email, name: shippingAddress.name }];
   sendSmtpEmail.htmlContent = `<!DOCTYPE html>
   <html lang="en">
     <head>
@@ -148,19 +147,24 @@ async function sendOrderEmail(
         <div class="container" style="width: 100%; max-width: 450px; margin: auto; padding: 40px 12px;">
           <header>
             <h1
-              style="margin: 28px 0 48px 0; font-size: 42px; font-weight: 600; color: black; line-height: 50px;"
+              style="margin: 28px 0 48px 0; font-size: 36px; font-weight: 600; color: black; line-height: 50px;"
             >
               Thank you for your order!
             </h1>
-            <p
+
+            <div
               class="intro"
               style="padding-bottom: 20px; font-size: 16px; color: black; line-height: 22px;"
             >
-              We&apos;re preparing everything for delivery and will notify you
-              once your package has been shipped. Delivery usually takes 2 days.<br./>
-              If you have any questions regarding your order, please feel free
-              to contact us with your order number and we&apos;re here to help.
-            </p>
+              <p>
+                We&apos;re preparing everything for delivery and will notify you
+                once your package has been shipped. Delivery usually takes 2 days.
+              </p>
+              <p>
+                If you have any questions regarding your order, please feel free
+                to contact us with your order number and we&apos;re here to help.
+              </p>
+            </div>
           </header>
   
           <div
@@ -169,20 +173,18 @@ async function sendOrderEmail(
           ></div>
 
           <div>
-            <p>Shipping to: {params.shippingAddressName}</p>
+            <p>Shipping to: {{params.shippingAddressName}}</p>
             <p>
-              {params.shippingAddressStreet}, {params.shippingAddressCity},{" "}
-              {params.shippingAddressState} {params.shippingAddressPostalCode}
+              {{params.shippingAddressStreet}}, {{params.shippingAddressCity}}, 
+              {{params.shippingAddressState}}, {{params.shippingAddressPostalCode}}
             </p>
           </div>
 
           <div>
-            <p>Order Number</p>
-            <p>{params.orderId}</p>
+            <p>Order Number: {{params.orderId}}</p>
           </div>
           <div>
-            <p>Order Date</p>
-            <p>{params.orderDate}</p>
+            <p>Order Date: {{params.orderDate}}</p>
           </div>
   
           <div
@@ -202,6 +204,5 @@ async function sendOrderEmail(
     </body>
   </html>`;
 
-  const res = await apiInstance.sendTransacEmail(sendSmtpEmail);
-  console.log("res: ", res.body);
+  await apiInstance.sendTransacEmail(sendSmtpEmail);
 }
