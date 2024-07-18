@@ -1,6 +1,6 @@
-## Phone case creator web app using NEXTJS + TailwindCSS and Shadcn
+## Phone case creator web app
 
-### Deployed on Vercel
+#### Deployed on Vercel
 
 ## Tech Stack: Nextjs, TailwindCSS, Shadcn, Typescript, Prisma + NeonTech (DB), Uploadthing (Upload Images), Stripe (Payment), Kinde (Auth), Brevo (Email Sending)
 
