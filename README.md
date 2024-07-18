@@ -2,7 +2,7 @@
 
 ### Deployed on Vercel
 
-## Tech Stack: Nextjs, TailwindCSS, Shadcn, Typescript, Prisma + NeonTech, Uploadthing, Stripe
+## Tech Stack: Nextjs, TailwindCSS, Shadcn, Typescript, Prisma + NeonTech (DB), Uploadthing (Upload Images), Stripe (Payment), Kinde (Auth), Brevo (Email Sending)
 
 ## Preview Images
 
